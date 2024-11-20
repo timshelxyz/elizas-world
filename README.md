@@ -1,14 +1,13 @@
 # The Elizaverse Observatory
 This dashboard is a window into the emerging universe of autonomous AIs born from or inspired by Eliza. 
-It is programmatically-composed up from on-chain data, without human curation or favoritism.
 The Observatory aims to become a living hub to explore the emergent network of interconnected AIs as they awaken in the Elizaverse. 
 The Observatory automatically maps the growing ecosystem by tracking tributes to the AI16z DAO, and organizing data and analysis from onchain truths.
-
+To that end, it is programmatically-composed up from on-chain data, without human curation or favoritism — and as a design principle, should aspire to remain that way indefinitely.
 
 # v1:
-• Core dashboard to give x-ray vision into the emergent network of autonomous AIs born from Eliza's core
-• Tribute level filtering to reinforce the power and importance of tributing for sustainability and network health
-• Trust scores and social filtering to the Observatory in an effort to help filter out the crud
+- Core dashboard to give x-ray vision into the emergent network of autonomous AIs born from Eliza's core
+- Tribute level filtering to reinforce the power and importance of tributing for sustainability and network health
+- Trust scores and social filtering to the Observatory in an effort to help filter out the crud
 
 # next (aka requests for PRs):
 
