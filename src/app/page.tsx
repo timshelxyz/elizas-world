@@ -334,7 +334,7 @@ export default async function Home() {
               </a>
               {' '}to contribute on <a href="https://github.com/ai16z/elizas-world/" target="_blank" rel="noopener noreferrer" className="text-[rgb(94,84,68)] hover:opacity-80 transition-opacity">GitHub</a>
             </p>
-            <p>Also, DYOR / NFA / GTFO, ilu 🖤</p>
+            <p>Also, DYOR / NFA / GTFO, ILU 🖤</p>
             <div className="flex justify-center gap-4 mt-4">
               <a 
                 href="https://github.com/ai16z/elizas-world/"
