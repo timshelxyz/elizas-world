@@ -84,7 +84,7 @@ type SocialFilter = 'ALL' | 'HAS_TWITTER' | 'NO_TWITTER';
 function getTokenTags(holding: TokenHolding): Array<{label: string, color: string}> {
   const tags: Array<{label: string, color: string}> = [];
   
-  // Check for Degen Spartan AI address specifically
+  // Check for Eliza and Degen Spartan AI address specifically
   if (holding.address === '5voS9evDjxF589WuEub5i4ti7FWQmZCsAsyD5ucbuRqM') {
     tags.push({ 
       label: 'ai16z Partner', 
