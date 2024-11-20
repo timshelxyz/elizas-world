@@ -118,7 +118,7 @@ export default async function Home() {
                       What is the Elizaverse Observatory?
                     </h3>
                     <p className="text-sm text-gray-600">
-                      A window into the emerging universe of autonomous AIs born from or inspired by Eliza. Programmatically-composed up from on-chain data, without human curation or favoritism,the Observatory aims to become a living hub to explore the emergent network of interconnected AIs as they awaken in the Elizaverse. The Observatory automatically maps the growing ecosystem by tracking tributes to the <a href="https://solscan.io/account/AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG#portfolio" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">AI16z DAO</a>, and organizing data and analysis from onchain truths.
+                      A window into the emerging universe of autonomous AIs born from or inspired by Eliza. Programmatically-composed from on-chain data, without human curation or favoritism,the Observatory aims to become a living hub to explore the emergent network of interconnected AIs as they awaken in the Elizaverse. The Observatory automatically maps the growing ecosystem by tracking tributes to the <a href="https://solscan.io/account/AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG#portfolio" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">AI16z DAO</a>, and organizing data and analysis from onchain truths.
                     </p>
                   </div>
 
