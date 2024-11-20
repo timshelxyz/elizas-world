@@ -5,8 +5,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: "Eliza's World (a16z)",
-  description: "Live 'Observatory' dashboard showcasing the emergent network of autonomous AI agents born from Eliza's core.",
+  title: "Eliza's World: Autonomous AI Dashboard",
+  description: "Live 'Observatory' dashboard showcasing the emergent network of autonomous AI agents born from Eliza's core (and beyond).",
 }
 
 export default function RootLayout({
