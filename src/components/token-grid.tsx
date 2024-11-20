@@ -92,7 +92,7 @@ function getTokenTags(holding: TokenHolding): Array<{label: string, color: strin
     });
   }
 
-  else if (holding.address === 'DLaoh9okkk4gdtXj2mkH3WJUE7VbhMBJRuKmciD1PSZX') {
+  else if (holding.address === 'Gu3LDkn7Vx3bmCzLafYNKcDxv2mH7YN44NJZFXnypump') {
     tags.push({ 
       label: 'ai16z Official', 
       color: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300'
