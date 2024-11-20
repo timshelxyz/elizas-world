@@ -103,13 +103,13 @@ export default async function Home() {
                           text-[rgb(94,84,68)] font-medium hover:bg-[rgb(232,227,214)] 
                           transition-colors whitespace-nowrap"
               >
-                Tribute to ai16z* 🫡
+                Tribute to ai16z 🫡
               </a>
             </div>
 
             <details className="w-full max-w-2xl mb-4">
               <summary className="cursor-pointer text-[rgb(94,84,68)] hover:opacity-80 transition-opacity text-center">
-                What is this? ▾
+                What is this?
               </summary>
               <div className="mt-4 p-4 bg-[rgb(241,237,227)] rounded-lg">
                 <div className="space-y-6">
@@ -178,7 +178,7 @@ export default async function Home() {
 
        <details className="w-full max-w-2xl">
               <summary className="cursor-pointer text-[rgb(94,84,68)] hover:opacity-80 transition-opacity text-center">
-                Release Notes & Requests for Help ▾
+                Release Notes & Requests for Help
               </summary>
               <div className="mt-4 p-4 bg-[rgb(241,237,227)] rounded-lg">
                 <div className="space-y-4">
