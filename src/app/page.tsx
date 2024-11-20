@@ -106,10 +106,17 @@ export default async function Home() {
                 Tribute to ai16z 🫡
               </a>
             </div>
+            <div className="text-sm text-gray-500 text-center">
+              ℹ️ {" "}
+              Learn about the Eliza ecosystem: {" "}
+              <a href="https://x.com/TimshelXYZ/status/1859267985103548899" className="text-orange-600 hover:underline" target="_blank" rel="noopener noreferrer">here</a>, {" "}
+              <a href="https://x.com/shawmakesmagic/status/1858823572434940048" className="text-orange-600 hover:underline" target="_blank" rel="noopener noreferrer">here</a>, and {" "}
+              <a href="https://x.com/shawmakesmagic/status/1859322683634352168" className="text-orange-600 hover:underline" target="_blank" rel="noopener noreferrer">here</a>
+            </div>
 
             <details className="w-full max-w-2xl mb-4">
               <summary className="cursor-pointer text-[rgb(94,84,68)] hover:opacity-80 transition-opacity text-center">
-                What is this?
+                What is this app?
               </summary>
               <div className="mt-4 p-4 bg-[rgb(241,237,227)] rounded-lg">
                 <div className="space-y-6">
