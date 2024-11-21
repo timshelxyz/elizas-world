@@ -279,8 +279,9 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
 
   return (
     <div className="space-y-4 w-full">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
+        {/* Tribute Filter */}
+        <div className="flex flex-wrap gap-2">
           {(['ALL', 'FULL', 'HALF', 'SMOL'] as TributeFilter[]).map((filter) => (
             <button
               key={filter}
@@ -296,25 +297,26 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
           ))}
         </div>
         
-        <div className="flex gap-2">
+        {/* Social Filter */}
+        <div className="flex gap-2 w-full sm:w-auto">
           <Button
             variant={socialFilter === 'HAS_TWITTER' ? 'default' : 'outline'}
             onClick={() => setSocialFilter('HAS_TWITTER')}
-            className="text-sm"
+            className="text-sm flex-1 sm:flex-none"
           >
             Has 𝕏
           </Button>
           <Button
             variant={socialFilter === 'NO_TWITTER' ? 'default' : 'outline'}
             onClick={() => setSocialFilter('NO_TWITTER')}
-            className="text-sm"
+            className="text-sm flex-1 sm:flex-none"
           >
             No 𝕏
           </Button>
           <Button
             variant={socialFilter === 'ALL' ? 'default' : 'outline'}
             onClick={() => setSocialFilter('ALL')}
-            className="text-sm"
+            className="text-sm flex-1 sm:flex-none"
           >
             All
           </Button>
@@ -325,8 +327,9 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
         <Table className="w-full relative">
           <TableHeader>
             <TableRow className="hover:bg-transparent">
-              <TableHead className="sticky left-0 z-10 bg-white dark:bg-inherit">🦾</TableHead>
-              <TableHead className="sticky left-[65px] z-10 bg-white dark:bg-inherit">Token (CA)</TableHead>
+              <TableHead className="w-[65px]">🦾</TableHead>
+              <TableHead>Token (CA)</TableHead>
+              <TableHead className="sm:hidden">Token (CA)</TableHead>
               <SortHeader label="Links" sortKey="address" />
               <SortHeader label="Tribute Level" sortKey="percentageOwned" />
               <SortHeader label="Created" sortKey="createdAt" />
@@ -352,7 +355,7 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
                   ${index % 2 === 0 ? 'bg-card' : 'bg-background'}
                 `}
               >
-                <TableCell className="sticky left-0 z-20 bg-white/95 dark:bg-background/95 min-w-[65px] backdrop-blur-sm">
+                <TableCell className="w-[65px]">
                   <div className="w-8 h-8 relative">
                     <a 
                       href={
@@ -371,7 +374,7 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
                     </a>
                   </div>
                 </TableCell>
-                <TableCell className="sticky left-[65px] z-10 bg-white dark:bg-inherit font-medium">
+                <TableCell>
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
                       <a href={`https://www.defined.fi/sol/${holding.address}`}>
@@ -410,6 +413,25 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
                         </svg>
                       </button>
                     </div>
+                  </div>
+                </TableCell>
+                <TableCell className="sm:hidden">
+                  <div className="w-8 h-8 relative">
+                    <a 
+                      href={
+                        holding.marketData.info?.socials?.find(s => s.type.toLowerCase() === 'twitter')?.url || 
+                        `https://www.defined.fi/sol/${holding.address}`
+                      }
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full h-full"
+                    >
+                      <img 
+                        src={holding.marketData.info?.imageUrl || 'https://via.placeholder.com/32'} 
+                        alt={holding.marketData.baseToken.name}
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    </a>
                   </div>
                 </TableCell>
                 <TableCell className="flex gap-2">
