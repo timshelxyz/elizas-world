@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import { formatDateTime } from '@/lib/date-utils';
+import Link from 'next/link';
 
 // Helper function to format large numbers
 function formatCurrency(value: number): string {
@@ -356,25 +357,30 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
                   ${index % 2 === 0 ? 'bg-card' : 'bg-background'}
                 `}
               >
-                <TableCell className="w-[65px]">
-                  <div className="w-8 h-8 relative">
-                    <a 
-                      href={
-                        holding.marketData.info?.socials?.find(s => s.type.toLowerCase() === 'twitter')?.url || 
-                        `https://www.defined.fi/sol/${holding.address}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full h-full"
-                    >
-                      <img 
-                        src={holding.marketData.info?.imageUrl || 'https://via.placeholder.com/32'} 
-                        alt={holding.marketData.baseToken.name}
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    </a>
-                  </div>
-                </TableCell>
+              <TableCell>
+  <div className="flex items-center gap-2">
+    <Link 
+      href={`/token/${holding.address}`}
+      className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+    >
+      <div className="w-8 h-8 flex-shrink-0">
+        <img 
+          src={holding.marketData.info?.imageUrl || 'https://via.placeholder.com/32'} 
+          alt={holding.marketData.baseToken.name}
+          className="w-full h-full rounded-full object-cover"
+        />
+      </div>
+      <div className="min-w-0"> {/* Add min-w-0 to allow truncation */}
+        <div className="font-medium truncate max-w-[150px]">
+          {holding.marketData.baseToken.name}
+        </div>
+        <div className="text-sm text-gray-500 truncate max-w-[150px]">
+          {holding.marketData.baseToken.symbol}
+        </div>
+      </div>
+    </Link>
+  </div>
+</TableCell>
                 <TableCell>
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
@@ -418,21 +424,13 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
                 </TableCell>
                 <TableCell className="sm:hidden">
                   <div className="w-8 h-8 relative">
-                    <a 
-                      href={
-                        holding.marketData.info?.socials?.find(s => s.type.toLowerCase() === 'twitter')?.url || 
-                        `https://www.defined.fi/sol/${holding.address}`
-                      }
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full h-full"
-                    >
+                    <Link href={`/token/${holding.address}`}>
                       <img 
                         src={holding.marketData.info?.imageUrl || 'https://via.placeholder.com/32'} 
                         alt={holding.marketData.baseToken.name}
-                        className="w-full h-full rounded-full object-cover"
+                        className="w-full h-full rounded-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
                       />
-                    </a>
+                    </Link>
                   </div>
                 </TableCell>
                 <TableCell className="flex gap-2">
