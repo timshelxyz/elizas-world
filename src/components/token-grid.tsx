@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import { formatDateTime } from '@/lib/date-utils';
 
 // Helper function to format large numbers
 function formatCurrency(value: number): string {
@@ -466,9 +467,8 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
                   )}
                 </TableCell>
                 <TableCell>
-                  {new Date(holding.marketData.pairCreatedAt).toLocaleDateString()} {' '}
-                  {new Date(holding.marketData.pairCreatedAt).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                </TableCell>
+  {formatDateTime(new Date(holding.marketData.pairCreatedAt))}
+</TableCell>
                 <TableCell>{formatCurrency(holding.usdValue)}</TableCell>
                 <TableCell>{formatCurrency(holding.marketData.fdv || 0)}</TableCell>
                 <TableCell>

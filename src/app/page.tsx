@@ -3,6 +3,7 @@ import { Connection } from "@solana/web3.js";
 import { getTokenData, fetchDexScreenerData, calculateHoldings } from "@/lib/token-utils";
 import { DexScreenerResponse } from "@/types";
 import { getCachedData, setCachedData, shouldRefreshCache } from '@/lib/cache';
+import { formatDateTime } from '@/lib/date-utils';
 
 const WALLET_ADDRESS = 'AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG';
 
@@ -43,7 +44,7 @@ export default async function Home() {
     const cached = getCachedData();
     if (cached && !shouldRefreshCache()) {
       holdings = cached.holdings;
-      lastUpdated = cached.lastUpdated;
+      lastUpdated = new Date(cached.lastUpdated);
       isCached = true;
     } else {
       // Fetch fresh data
@@ -375,8 +376,8 @@ export default async function Home() {
               </a>
             </div>
             <div className="text-sm text-gray-500 mb-4">
-            Last updated: {lastUpdated.toLocaleTimeString()}{isCached ? ' (cached)' : ''}
-          </div>
+  Last updated: {formatDateTime(lastUpdated)}{isCached ? ' (cached)' : ''}
+</div>
           </footer>
         </div>
       </main>
@@ -390,9 +391,9 @@ export default async function Home() {
       return (
         <main className="container max-w-[95vw] mx-auto p-4">
           <div className="flex flex-col items-center mb-8">
-            <div className="text-sm text-gray-500 mb-4">
-              Last updated: {cached.lastUpdated.toLocaleTimeString()} (cached)
-            </div>
+          <div className="text-sm text-gray-500 mb-4">
+  Last updated: {formatDateTime(cached.lastUpdated)} (cached)
+</div>
             <TokenGrid holdings={cached.holdings} />
           </div>
         </main>
