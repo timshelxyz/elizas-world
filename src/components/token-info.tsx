@@ -5,7 +5,13 @@ import { formatCurrency, formatNumber } from "@/lib/format-utils";
 import { formatDateTime } from "@/lib/date-utils";
 
 export function TokenInfo({ token }: { token: any }) {
-  console.log('Token data in TokenInfo:', token);
+  const score = token.trustScore || token.score || token.info?.trustScore;
+  console.log('Token data:', token);
+  console.log('Score paths:', {
+    trustScore: token.trustScore,
+    score: token.score,
+    infoTrustScore: token.info?.trustScore
+  });
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
@@ -48,15 +54,15 @@ export function TokenInfo({ token }: { token: any }) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`
-                    ${!token.info?.score ? 'text-gray-400' :
-                      token.info?.score >= 79 ? 'text-green-400' : 
-                      token.info?.score >= 60 ? 'text-orange-300' : 
-                      token.info?.score >= 40 ? 'text-red-500' : 
+                    ${!score ? 'text-gray-400' :
+                      score >= 79 ? 'text-green-400' : 
+                      score >= 60 ? 'text-orange-300' : 
+                      score >= 40 ? 'text-red-500' : 
                       'text-red-800'
                     } font-medium hover:underline cursor-pointer
                   `}
                 >
-                  {token.info?.score !== undefined ? token.info.score.toFixed(0) : 'N/A'}
+                  {score !== undefined ? score.toFixed(0) : 'N/A'}
                 </a>
               </dd>
             </div>

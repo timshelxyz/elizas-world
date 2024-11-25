@@ -18,6 +18,7 @@ const connection = new Connection(
 // Define the params type that Next.js expects
 type TokenPageProps = {
   params: { address: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 // Loading component
@@ -32,12 +33,19 @@ function LoadingState() {
   );
 }
 
-// Make the component async to handle the Promise
+// Update metadata function
 export async function generateMetadata({
-  params
-}: TokenPageProps): Promise<Metadata> {
+  params,
+  searchParams,
+}: {
+  params: { address: string },
+  searchParams: { [key: string]: string | string[] | undefined }
+}): Promise<Metadata> {
   try {
-    const { address } = params;
+    // Create a Promise to resolve the address
+    const addressPromise = Promise.resolve(params.address);
+    const address = await addressPromise;
+    
     const marketData = await fetchDexScreenerData([address]);
     const tokenName = marketData?.pairs?.[0]?.baseToken?.name || 'Token';
     
@@ -53,11 +61,19 @@ export async function generateMetadata({
   }
 }
 
+// Update page component
 export default async function TokenPage({
-  params
-}: TokenPageProps) {
+  params,
+  searchParams,
+}: {
+  params: { address: string },
+  searchParams: { [key: string]: string | string[] | undefined }
+}) {
   try {
-    const { address } = params;
+    // Create a Promise to resolve the address
+    const addressPromise = Promise.resolve(params.address);
+    const address = await addressPromise;
+    
     const marketData = await fetchDexScreenerData([address]);
     
     if (!marketData?.pairs?.length) {
