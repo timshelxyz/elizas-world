@@ -4,22 +4,13 @@ import { getTokenData, fetchDexScreenerData } from "@/lib/token-utils";
 import { TokenProfile } from "@/components/token-profile";
 import Link from "next/link";
 import { Suspense } from "react";
-import { formatDateTime } from "@/lib/date-utils";
 
-// Route segment config
 export const dynamic = 'force-dynamic';
 
-// Create connection outside component
 const connection = new Connection(
   process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://api.mainnet-beta.solana.com',
   'confirmed'
 );
-
-// Define the params type that Next.js expects
-type TokenPageProps = {
-  params: { address: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
 
 // Loading component
 function LoadingState() {
@@ -33,13 +24,16 @@ function LoadingState() {
   );
 }
 
-// Update metadata function
+type TokenPageProps = {
+  params: Promise<{ address: string }>;
+};
+
 export async function generateMetadata({
-  params,
-  searchParams,
+  params
 }: TokenPageProps): Promise<Metadata> {
   try {
-    const marketData = await fetchDexScreenerData([params.address]);
+    const { address } = await params;
+    const marketData = await fetchDexScreenerData([address]);
     const tokenName = marketData?.pairs?.[0]?.baseToken?.name || 'Token';
     
     return {
@@ -54,13 +48,16 @@ export async function generateMetadata({
   }
 }
 
-// Update page component
 export default async function TokenPage({
-  params,
-  searchParams,
+  params
 }: TokenPageProps) {
   try {
-    const marketData = await fetchDexScreenerData([params.address]);
+    const { address } = await params;
+    
+    const [tokenBalances, marketData] = await Promise.all([
+      getTokenData(connection),
+      fetchDexScreenerData([address])
+    ]);
     
     if (!marketData?.pairs?.length) {
       return (
