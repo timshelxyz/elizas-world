@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Twitter, Download } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TokenInfo } from "./token-info";
 import { TokenStats } from "./token-stats";
@@ -22,15 +22,56 @@ export function TokenProfile({ token }: { token: any }) {
       </div>
 
       <div className="flex flex-col items-center gap-8">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-4">
           <img 
             src={token.info?.imageUrl || '/default-token.png'} 
             alt={token.baseToken.name}
             className="w-24 h-24 rounded-full"
           />
-          <div>
+          <div className="flex flex-col items-center text-center">
             <h1 className="text-3xl font-bold">{token.baseToken.name}</h1>
             <p className="text-gray-600">{token.baseToken.symbol}</p>
+            
+            <div className="mt-2 text-sm text-gray-500">
+              <span>0 followers</span>
+              <span className="mx-2">·</span>
+              <span>Created {new Date(token.pairCreatedAt).toLocaleDateString()}</span>
+            </div>
+
+            <div className="flex gap-2 mt-4">
+              {/* Website if available */}
+              {token.info?.websites?.[0]?.url && (
+                <a 
+                  href={token.info.websites[0].url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  {token.info.websites[0].url.includes('vvaifu.fun') ? '🤖' : '🌐'}
+                </a>
+              )}
+              
+              {/* Social links */}
+              {token.info?.socials?.map((social: any) => (
+                <a 
+                  key={social.url}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-50"
+                >
+                  {social.type === 'twitter' && '𝕏'}
+                  {social.type === 'telegram' && '📱'}
+                  {social.type === 'discord' && '💬'}
+                </a>
+              ))}
+
+              {/* Download Training Data button */}
+              <button className="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-full text-sm font-medium text-gray-700 hover:bg-gray-50">
+                <Download className="w-4 h-4 mr-2" />
+                Training Data
+              </button>
+            </div>
           </div>
         </div>
 

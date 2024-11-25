@@ -8,32 +8,60 @@ export function TokenStats({ token }: { token: any }) {
     <div className="grid gap-4">
       <Card>
         <CardHeader>
-          <CardTitle>Performance</CardTitle>
+          <CardTitle>Price Changes</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             <div className="space-y-1">
-              <p className="text-sm font-medium text-gray-500">1h Change</p>
-              <p className={`text-2xl font-bold ${token.priceChange.h1 >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatPercentage(token.priceChange.h1)}
+              <p className="text-sm font-medium text-gray-500">5m</p>
+              <p className={`text-2xl font-bold ${
+                !token.priceChange?.m5 ? 'text-gray-400' :
+                token.priceChange.m5 > 0 ? 'text-green-500' : 
+                'text-red-500'
+              }`}>
+                {token.priceChange?.m5 
+                  ? `${Math.round(token.priceChange.m5)}%` 
+                  : '0%'
+                }
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-medium text-gray-500">24h Change</p>
-              <p className={`text-2xl font-bold ${token.priceChange.h24 >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatPercentage(token.priceChange.h24)}
+              <p className="text-sm font-medium text-gray-500">1h</p>
+              <p className={`text-2xl font-bold ${
+                !token.priceChange?.h1 ? 'text-gray-400' :
+                token.priceChange.h1 > 0 ? 'text-green-500' : 
+                'text-red-500'
+              }`}>
+                {token.priceChange?.h1 
+                  ? `${Math.round(token.priceChange.h1)}%` 
+                  : '0%'
+                }
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-medium text-gray-500">7d Change</p>
-              <p className={`text-2xl font-bold ${token.priceChange.h7d >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatPercentage(token.priceChange.h7d)}
+              <p className="text-sm font-medium text-gray-500">6h</p>
+              <p className={`text-2xl font-bold ${
+                !token.priceChange?.h6 ? 'text-gray-400' :
+                token.priceChange.h6 > 0 ? 'text-green-500' : 
+                'text-red-500'
+              }`}>
+                {token.priceChange?.h6 
+                  ? `${Math.round(token.priceChange.h6)}%` 
+                  : '0%'
+                }
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-sm font-medium text-gray-500">30d Change</p>
-              <p className={`text-2xl font-bold ${token.priceChange.h30d >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                {formatPercentage(token.priceChange.h30d)}
+              <p className="text-sm font-medium text-gray-500">24h</p>
+              <p className={`text-2xl font-bold ${
+                !token.priceChange?.h24 ? 'text-gray-400' :
+                token.priceChange.h24 > 0 ? 'text-green-500' : 
+                'text-red-500'
+              }`}>
+                {token.priceChange?.h24 
+                  ? `${Math.round(token.priceChange.h24)}%` 
+                  : '0%'
+                }
               </p>
             </div>
           </div>

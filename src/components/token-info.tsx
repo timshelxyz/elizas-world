@@ -5,6 +5,8 @@ import { formatCurrency, formatNumber } from "@/lib/format-utils";
 import { formatDateTime } from "@/lib/date-utils";
 
 export function TokenInfo({ token }: { token: any }) {
+  console.log('Token data in TokenInfo:', token);
+
   return (
     <div className="grid gap-4 md:grid-cols-2">
       <Card>
@@ -38,6 +40,30 @@ export function TokenInfo({ token }: { token: any }) {
               <dt className="text-sm font-medium text-gray-500">Created</dt>
               <dd>{formatDateTime(new Date(token.pairCreatedAt))}</dd>
             </div>
+            <div className="flex justify-between">
+              <dt className="text-sm font-medium text-gray-500">Trust Score</dt>
+              <dd>
+                <a 
+                  href={`https://www.solsniffer.com/scanner/${token.baseToken.address}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`
+                    ${!token.info?.score ? 'text-gray-400' :
+                      token.info?.score >= 79 ? 'text-green-400' : 
+                      token.info?.score >= 60 ? 'text-orange-300' : 
+                      token.info?.score >= 40 ? 'text-red-500' : 
+                      'text-red-800'
+                    } font-medium hover:underline cursor-pointer
+                  `}
+                >
+                  {token.info?.score !== undefined ? token.info.score.toFixed(0) : 'N/A'}
+                </a>
+              </dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-sm font-medium text-gray-500">Total Supply</dt>
+              <dd>{formatNumber((token.fdv || 0) / Number(token.priceUsd))}</dd>
+            </div>
           </dl>
         </CardContent>
       </Card>
@@ -63,6 +89,10 @@ export function TokenInfo({ token }: { token: any }) {
             <div className="flex justify-between">
               <dt className="text-sm font-medium text-gray-500">Liquidity</dt>
               <dd>{formatCurrency(token.liquidity?.usd || 0)}</dd>
+            </div>
+            <div className="flex justify-between">
+              <dt className="text-sm font-medium text-gray-500">FDV</dt>
+              <dd>{formatCurrency(token.fdv || 0)}</dd>
             </div>
           </dl>
         </CardContent>

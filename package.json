@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@shadcn/ui": "^0.0.4",
-    "@types/node": "^22.9.0",
+    "@types/node": "^20.11.1",
     "@types/react": "^18.3.12",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",

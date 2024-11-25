@@ -35,24 +35,14 @@ function deduplicateMarketData(data: DexScreenerResponse): DexScreenerResponse {
   };
 }
 
-interface PageProps {
-  params: { address: string };
-  searchParams?: Record<string, string | string[] | undefined>;
-}
-
-export async function generateMetadata(
-  { params }: PageProps
-): Promise<Metadata> {
-  const marketData = await fetchDexScreenerData([params.address]);
-  const tokenName = marketData?.pairs?.[0]?.baseToken?.name || 'Token';
-
+export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: `${tokenName} | AI Observatory`,
-    description: `View detailed information about ${tokenName} on AI Observatory`,
+    title: "Elizaverse Observatory | AI16z",
+    description: "Live 'Observatory' dashboard showcasing the emergent network of autonomous AI agents",
   };
 }
 
-export default async function TokenPage({ params }: PageProps) {
+export default async function Page() {
   try {
     let holdings;
     let lastUpdated;

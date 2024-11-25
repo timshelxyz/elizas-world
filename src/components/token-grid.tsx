@@ -384,9 +384,9 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
                 <TableCell>
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
-                      <a href={`https://www.defined.fi/sol/${holding.address}`}>
+                      <Link href={`/token/${holding.address}`} className="hover:opacity-80 transition-opacity">
                         {holding.marketData.baseToken.name}
-                      </a>
+                      </Link>
                       {getTokenTags(holding).map((tag, index) => (
                         <span
                           key={index}
