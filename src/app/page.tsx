@@ -4,6 +4,7 @@ import { getTokenData, fetchDexScreenerData, calculateHoldings } from "@/lib/tok
 import { DexScreenerResponse } from "@/types";
 import { getCachedData, setCachedData, shouldRefreshCache } from '@/lib/cache';
 import { formatDateTime } from '@/lib/date-utils';
+import { Metadata } from "next";
 
 const WALLET_ADDRESS = 'AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG';
 
@@ -34,7 +35,24 @@ function deduplicateMarketData(data: DexScreenerResponse): DexScreenerResponse {
   };
 }
 
-export default async function Home() {
+interface PageProps {
+  params: { address: string };
+  searchParams?: Record<string, string | string[] | undefined>;
+}
+
+export async function generateMetadata(
+  { params }: PageProps
+): Promise<Metadata> {
+  const marketData = await fetchDexScreenerData([params.address]);
+  const tokenName = marketData?.pairs?.[0]?.baseToken?.name || 'Token';
+
+  return {
+    title: `${tokenName} | AI Observatory`,
+    description: `View detailed information about ${tokenName} on AI Observatory`,
+  };
+}
+
+export default async function TokenPage({ params }: PageProps) {
   try {
     let holdings;
     let lastUpdated;
