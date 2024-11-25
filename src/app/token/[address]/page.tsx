@@ -37,16 +37,9 @@ function LoadingState() {
 export async function generateMetadata({
   params,
   searchParams,
-}: {
-  params: { address: string },
-  searchParams: { [key: string]: string | string[] | undefined }
-}): Promise<Metadata> {
+}: TokenPageProps): Promise<Metadata> {
   try {
-    // Create a Promise to resolve the address
-    const addressPromise = Promise.resolve(params.address);
-    const address = await addressPromise;
-    
-    const marketData = await fetchDexScreenerData([address]);
+    const marketData = await fetchDexScreenerData([params.address]);
     const tokenName = marketData?.pairs?.[0]?.baseToken?.name || 'Token';
     
     return {
@@ -65,16 +58,9 @@ export async function generateMetadata({
 export default async function TokenPage({
   params,
   searchParams,
-}: {
-  params: { address: string },
-  searchParams: { [key: string]: string | string[] | undefined }
-}) {
+}: TokenPageProps) {
   try {
-    // Create a Promise to resolve the address
-    const addressPromise = Promise.resolve(params.address);
-    const address = await addressPromise;
-    
-    const marketData = await fetchDexScreenerData([address]);
+    const marketData = await fetchDexScreenerData([params.address]);
     
     if (!marketData?.pairs?.length) {
       return (
