@@ -86,8 +86,9 @@ export default async function Page() {
         <div className="flex flex-col items-center mb-8">
 
           <div className="flex flex-col items-center gap-4 mb-4">
-            <h1 className="text-[32px] font-bold leading-[36px] text-center text-[rgb(36,36,36)]">
-              Elizaverse Observatory v1.0
+            <h1 className="text-[32px] font-bold leading-[36px] text-center">
+              <span className="text-[rgb(36,36,36)]">Elizaverse Observatory</span>{" "}
+              <span className="text-gray-400">v1.0</span>
             </h1>
             <h2 className="text-[18px] leading-[24px] text-center text-[rgb(68,77,86)]">
               Witness the swarm awaken.
