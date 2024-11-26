@@ -283,19 +283,19 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
     <div className="space-y-4 w-full">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
         {/* Tribute Filter */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex gap-2">
           {(['ALL', 'FULL', 'HALF', 'SMOL'] as TributeFilter[]).map((filter) => (
-            <button
+            <Button
               key={filter}
+              variant={tributeFilter === filter ? 'default' : 'outline'}
               onClick={() => setTributeFilter(filter)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors
-                ${tributeFilter === filter 
-                  ? 'bg-[rgb(94,84,68)] text-white' 
-                  : 'bg-[rgb(232,227,214)] text-[rgb(94,84,68)] hover:bg-[rgb(224,220,209)]'
-                }`}
+              className="text-sm flex-1 sm:flex-none"
             >
-              {filter} {filter !== 'ALL' && 'TRIBUTE'}
-            </button>
+              {filter === 'ALL' ? 'ALL' : 
+               filter === 'FULL' ? 'Full Tribute' :
+               filter === 'HALF' ? 'Half' :
+               'Smol'}
+            </Button>
           ))}
         </div>
         
@@ -304,21 +304,21 @@ export function TokenGrid({ holdings }: { holdings: TokenHolding[] }) {
           <Button
             variant={socialFilter === 'HAS_TWITTER' ? 'default' : 'outline'}
             onClick={() => setSocialFilter('HAS_TWITTER')}
-            className="text-sm flex-1 sm:flex-none"
+            className="text-sm w-auto"
           >
             Has 𝕏
           </Button>
           <Button
             variant={socialFilter === 'NO_TWITTER' ? 'default' : 'outline'}
             onClick={() => setSocialFilter('NO_TWITTER')}
-            className="text-sm flex-1 sm:flex-none"
+            className="text-sm w-auto"
           >
             No 𝕏
           </Button>
           <Button
             variant={socialFilter === 'ALL' ? 'default' : 'outline'}
             onClick={() => setSocialFilter('ALL')}
-            className="text-sm flex-1 sm:flex-none"
+            className="text-sm w-auto"
           >
             All
           </Button>
