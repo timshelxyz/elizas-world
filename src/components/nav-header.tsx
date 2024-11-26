@@ -28,12 +28,12 @@ export function NavHeader() {
               </a>
               <span>•</span>
               <a 
-                href="https://twitter.com/SkynetNeural_AI"
+                href="https://twitter.com/manifestrune"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[#ff6b35] hover:text-[#e85a2a] flex items-center gap-1"
               >
-                Skynet Neural AI (BTC) <ExternalLink className="h-3 w-3" />
+                Manifestation (BTC) <ExternalLink className="h-3 w-3" />
               </a>
               <span>•</span>
               <a 
