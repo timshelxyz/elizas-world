@@ -102,12 +102,6 @@ export function NavHeader() {
           </a>
           <nav className="flex items-center gap-4">
             <a 
-              href="https://elizas.world" 
-              className="text-[rgb(94,84,0)] font-medium text-sm hover:bg-[rgb(232,227,214)] px-3 py-1.5 rounded-xl"
-            >
-              Elizaverse
-            </a>
-            <a 
               href="https://ai16z.ai/" 
               className="text-[rgb(94,84,68)] font-medium text-sm hover:bg-[rgb(232,227,214)] px-3 py-1.5 rounded-xl"
             >
