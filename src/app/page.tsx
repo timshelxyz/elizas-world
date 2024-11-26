@@ -99,21 +99,21 @@ export default async function Page() {
                 href="https://ai16z.ai/eliza-list" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="px-6 py-2 bg-[rgb(94,84,68)] rounded-full 
+                className="px-6 py-2 bg-[rgb(35,34,32)] rounded-full 
                           text-white font-medium hover:opacity-90 transition-opacity
                           shadow-lg hover:shadow-xl whitespace-nowrap"
               >
                 Apply to Be Featured ✨
               </a>
               <a 
-                href="https://solscan.io/account/AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG#portfolio" 
+                href="https://formless.ai/c/fz7JHbey05w1" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="px-6 py-2 border-2 border-[rgb(94,84,68)] rounded-full 
                           text-[rgb(94,84,68)] font-medium hover:bg-[rgb(232,227,214)] 
                           transition-colors whitespace-nowrap"
               >
-                Tribute to ai16z 🫡
+                Create an Eliza 🦾
               </a>
             </div>
             <div className="text-sm text-gray-500 text-center">
