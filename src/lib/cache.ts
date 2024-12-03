@@ -1,44 +1,50 @@
 import { TokenHolding } from "@/types";
-import fs from 'fs';
-import path from 'path';
+import { Redis } from '@upstash/redis'
 
-const CACHE_FILE = path.join(process.cwd(), 'data', 'cache.json');
-const CACHE_DURATION = 60 * 1000; // 1 minute in milliseconds
+const CACHE_KEY = 'token_holdings_cache';
+const CACHE_DURATION = 60; // 1 minute in seconds
 
-export function getCachedData() {
-    try {
-        if (!fs.existsSync(CACHE_FILE)) {
-            return null;
-        }
-        const data = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf-8'));
-        return {
-            holdings: data.holdings,
-            lastUpdated: new Date(data.lastUpdated)
-        };
-    } catch (error) {
-        console.error('Error reading cache:', error);
-        return null;
-    }
+// Initialize Redis client
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+})
+
+// Define the interface for the cached data
+interface CachedData {
+  holdings: TokenHolding[];
+  lastUpdated: string;
 }
 
-export function setCachedData(holdings: TokenHolding[]) {
-    try {
-        const dir = path.dirname(CACHE_FILE);
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
-        fs.writeFileSync(CACHE_FILE, JSON.stringify({
-            holdings,
-            lastUpdated: new Date()
-        }));
-    } catch (error) {
-        console.error('Error writing cache:', error);
-    }
+export async function getCachedData(): Promise<CachedData | null> {
+  try {
+    const data = await redis.get<CachedData>(CACHE_KEY);
+    if (!data) return null;
+    return {
+      holdings: data.holdings,
+      lastUpdated: data.lastUpdated
+    };
+  } catch (error) {
+    console.error('Error reading cache:', error);
+    return null;
+  }
 }
 
-export function shouldRefreshCache(): boolean {
-    const cached = getCachedData();
-    if (!cached) return true;
-    const now = new Date();
-    return now.getTime() - cached.lastUpdated.getTime() > CACHE_DURATION;
+export async function setCachedData(holdings: TokenHolding[]): Promise<void> {
+  try {
+    const cacheData: CachedData = {
+      holdings,
+      lastUpdated: new Date().toISOString()
+    };
+    await redis.set(CACHE_KEY, cacheData, { ex: CACHE_DURATION });
+  } catch (error) {
+    console.error('Error writing cache:', error);
+  }
+}
+
+export async function shouldRefreshCache(): Promise<boolean> {
+  const cached = await getCachedData();
+  if (!cached) return true;
+  const now = new Date();
+  return now.getTime() - new Date(cached.lastUpdated).getTime() > CACHE_DURATION * 1000;
 }

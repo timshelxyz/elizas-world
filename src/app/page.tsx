@@ -49,12 +49,16 @@ export default async function Page() {
     let isCached = false;
 
     // Check cache first
-    const cached = getCachedData();
-    if (cached && !shouldRefreshCache()) {
+    const cached = await getCachedData();
+    const shouldRefresh = await shouldRefreshCache();
+    console.log('Should refresh cached?', shouldRefresh);
+    if (cached && !shouldRefresh) {
+      console.log('Using cached data');
       holdings = cached.holdings;
       lastUpdated = new Date(cached.lastUpdated);
       isCached = true;
     } else {
+      console.log('Fetching fresh data');
       // Fetch fresh data
       const tokenBalances = await getTokenData(connection);
       
@@ -395,13 +399,13 @@ export default async function Page() {
   } catch (error) {
     console.error('Error in Home component:', error);
     // Try to return cached data on error
-    const cached = getCachedData();
+    const cached = await getCachedData();
     if (cached) {
       return (
         <main className="container max-w-[95vw] mx-auto p-4">
           <div className="flex flex-col items-center mb-8">
           <div className="text-sm text-gray-500 mb-4">
-  Last updated: {formatDateTime(cached.lastUpdated)} (cached)
+  Last updated: {formatDateTime(new Date(cached.lastUpdated))} (cached)
 </div>
             <TokenGrid holdings={cached.holdings} />
           </div>

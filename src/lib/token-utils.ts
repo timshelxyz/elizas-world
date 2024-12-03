@@ -50,7 +50,7 @@ export async function getTokenBalances(connection: Connection, walletPubkey: Pub
             walletPubkey,
             { programId: TOKEN_PROGRAM_ID }
         );
-        
+        console.log("Accounts:",accounts.value.length);
         return accounts.value
             .map((account: { account: ParsedTokenAccount }) => ({
                 mint: account.account.data.parsed.info.mint,
@@ -154,7 +154,7 @@ export async function calculateHoldings(
     // Fetch scores for all tokens
     console.log('Fetching scores for', tokenAddresses.length, 'tokens');
     const scores = await fetchTokenScores(tokenAddresses);
-    console.log('Fetched scores:', scores);
+    console.log('Fetched scores:', scores.length);
 
     for (const pair of marketData.pairs) {
         if (!pair?.baseToken?.address || seenPairs.has(pair.baseToken.address)) {
