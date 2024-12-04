@@ -7,6 +7,7 @@ import { TokenInfo } from "./token-info";
 import { TokenStats } from "./token-stats";
 import { TokenSocial } from "./token-social";
 import { TokenLore } from "./token-lore";
+import { UnifiedTweetStream } from "./unified-tweet-stream";
 
 export function TokenProfile({ token }: { token: any }) {
   return (
@@ -76,11 +77,12 @@ export function TokenProfile({ token }: { token: any }) {
         </div>
 
         <Tabs defaultValue="info" className="w-full max-w-3xl">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="info">Info</TabsTrigger>
             <TabsTrigger value="stats">Stats</TabsTrigger>
             <TabsTrigger value="social">Social</TabsTrigger>
             <TabsTrigger value="lore">Lore</TabsTrigger>
+            <TabsTrigger value="tweets">Tweets</TabsTrigger>
             <TabsTrigger value="feedback">Feedback</TabsTrigger>
           </TabsList>
           
@@ -98,6 +100,10 @@ export function TokenProfile({ token }: { token: any }) {
           
           <TabsContent value="lore">
             <TokenLore token={token} />
+          </TabsContent>
+          
+          <TabsContent value="tweets">
+            <UnifiedTweetStream token={token} />
           </TabsContent>
           
           <TabsContent value="feedback">

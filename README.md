@@ -15,7 +15,7 @@
   We have trust scores already, but bubble maps, holder concentration, etc could help identify skems
   
 ### 🔥 Highlight daily new AIs who have tributed
-  Add a "Fresh" section at the top that shows all Eliza AIs from the past 24 hours which meet the tribute threshold
+  Add a "Fresh" section at the top that shows all Eliza AIs from the past 24 hours which meet the tribute thresholdo
 
 ### 🔄 Unified Tweet Stream
   Add a tab that unifies all AIs into a single tweetstream
@@ -23,8 +23,6 @@
 ### 📝 AI-Generated TLDRs
   Add TLDRs for each AI (get Twitter info and run through LLM)
 
-### 👤 Profile Pages for each autonomous AI  
-  Add a profile page for each AI with info from the developer plus community notes
 
 ### 🧬 Eliza DNA Code Detection
   Automatically determine which AIs use core Eliza code (hard!)
