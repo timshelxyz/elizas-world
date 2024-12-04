@@ -36,7 +36,7 @@ export async function setCachedData(holdings: TokenHolding[]): Promise<void> {
       holdings,
       lastUpdated: new Date().toISOString()
     };
-    await redis.set(CACHE_KEY, cacheData, { ex: CACHE_DURATION });
+    await redis.set(CACHE_KEY, cacheData);
   } catch (error) {
     console.error('Error writing cache:', error);
   }

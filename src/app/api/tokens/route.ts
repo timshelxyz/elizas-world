@@ -13,8 +13,8 @@ const connection = new Connection(
 export async function GET() {
     try {
         // Check cache first
-        const cached = getCachedData();
-        if (cached && !shouldRefreshCache()) {
+        const cached = await getCachedData();
+        if (cached && !await shouldRefreshCache()) {
             return new NextResponse(JSON.stringify(cached.holdings), {
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,7 +47,7 @@ export async function GET() {
     } catch (error) {
         console.error('API Error:', error);
         // Return cached data on error if available
-        const cached = getCachedData();
+        const cached = await getCachedData();
         if (cached) {
             return new NextResponse(JSON.stringify(cached.holdings), {
                 headers: {

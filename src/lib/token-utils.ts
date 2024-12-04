@@ -44,23 +44,25 @@ function saveScoresToCache(scores: Record<string, number>) {
 }
 
 export async function getTokenBalances(connection: Connection, walletPubkey: PublicKey): Promise<TokenBalance[]> {
+
+    let accounts
     try {
-        // We'll skip Alchemy for now as it doesn't support Solana natively
-        const accounts = await connection.getParsedTokenAccountsByOwner(
+        accounts = await connection.getParsedTokenAccountsByOwner(
             walletPubkey,
             { programId: TOKEN_PROGRAM_ID }
-        );
-        console.log("Accounts:",accounts.value.length);
-        return accounts.value
-            .map((account: { account: ParsedTokenAccount }) => ({
-                mint: account.account.data.parsed.info.mint,
-                tokenAmount: account.account.data.parsed.info.tokenAmount
-            }))
-            .filter((info) => Number(info.tokenAmount.amount) > 0);
-    } catch (error) {
-        console.error("Error in getTokenBalances:", error instanceof Error ? error.message : String(error));
-        return [];
-    }
+        )
+    } catch(e: any) {
+        console.log(connection);
+            console.error('Error fetching token accounts:', e.response?.data || e.message);
+            throw e;
+    };
+    console.log("Accounts:", accounts.value.length);
+    return accounts.value
+        .map((account: { account: ParsedTokenAccount }) => ({
+            mint: account.account.data.parsed.info.mint,
+            tokenAmount: account.account.data.parsed.info.tokenAmount
+        }))
+        .filter((info) => Number(info.tokenAmount.amount) > 0);
 }
 
 export async function fetchDexScreenerData(
@@ -201,7 +203,7 @@ export async function getTokenData(connection: Connection) {
         return balances;
     } catch (error) {
         console.error("Error in getTokenData:", error instanceof Error ? error.message : String(error));
-        return [];
+        throw error;
     }
 }
 

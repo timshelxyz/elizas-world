@@ -60,29 +60,41 @@ export default async function Page() {
     } else {
       console.log('Fetching fresh data');
       // Fetch fresh data
-      const tokenBalances = await getTokenData(connection);
-      
-      if (!tokenBalances || tokenBalances.length === 0) {
-        return <div>No tokens found</div>;
+      try {
+        const tokenBalances = await getTokenData(connection);
+        
+        if (!tokenBalances || tokenBalances.length === 0) {
+          return <div>No tokens found</div>;
+        }
+
+        const marketData = await fetchDexScreenerData(
+          tokenBalances.map(t => t.mint)
+        );
+
+        if (!marketData?.pairs?.length) {
+          return <div>No market data available</div>;
+        }
+
+        const dedupedMarketData = deduplicateMarketData(marketData);
+        holdings = await calculateHoldings(
+          connection,
+          tokenBalances,
+          dedupedMarketData,
+          WALLET_ADDRESS
+        );
+        lastUpdated = new Date();
+        setCachedData(holdings);
+      } catch (error) {
+        // fall back to cached data
+        console.error('Error fetching fresh data:', error);
+        if (cached) {
+          holdings = cached.holdings;
+          lastUpdated = new Date(cached.lastUpdated);
+          isCached = true;
+        } else {
+          return <div>Error loading token data</div>;
+        }
       }
-
-      const marketData = await fetchDexScreenerData(
-        tokenBalances.map(t => t.mint)
-      );
-
-      if (!marketData?.pairs?.length) {
-        return <div>No market data available</div>;
-      }
-
-      const dedupedMarketData = deduplicateMarketData(marketData);
-      holdings = await calculateHoldings(
-        connection,
-        tokenBalances,
-        dedupedMarketData,
-        WALLET_ADDRESS
-      );
-      lastUpdated = new Date();
-      setCachedData(holdings);
     }
 
     return (
