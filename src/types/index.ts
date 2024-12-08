@@ -161,6 +161,18 @@ interface DexScreenerResponse {
     }>;
 }
 
+// Add this to your existing types file
+export interface DexScreenerPair {
+  baseToken: { address: string; name: string; symbol: string };
+  priceUsd: string;
+  priceChange: { m5: number; h1: number; h6: number; h24: number };
+  fdv?: number;
+  volume?: { h24: number };
+  txns?: { h24: number };
+  info?: TokenInfo;
+  pairCreatedAt: number;
+}
+
 export type {
     TokenAmount,
     ParsedTokenAccount,

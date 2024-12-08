@@ -1,7 +1,7 @@
 import { Connection, PublicKey } from '@solana/web3.js';
 import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import axios, { AxiosError } from 'axios';
-import { TokenHolding, DexScreenerResponse, ParsedTokenAccount, TokenBalance } from '@/types';
+import { TokenHolding, DexScreenerResponse, ParsedTokenAccount, TokenBalance, DexScreenerPair } from '@/types';
 import { Alchemy, Network } from "alchemy-sdk";
 import fs from 'fs';
 import path from 'path';
@@ -65,6 +65,8 @@ export async function getTokenBalances(connection: Connection, walletPubkey: Pub
         .filter((info) => Number(info.tokenAmount.amount) > 0);
 }
 
+// ... existing code ...
+
 export async function fetchDexScreenerData(
     tokenAddresses: string[]
 ): Promise<DexScreenerResponse> {
@@ -78,12 +80,14 @@ export async function fetchDexScreenerData(
 
         // Break addresses into batches of 30
         const BATCH_SIZE = 30;
-        const allPairs = [];
+        const batches = [];
 
         for (let i = 0; i < validAddresses.length; i += BATCH_SIZE) {
-            const batchAddresses = validAddresses.slice(i, i + BATCH_SIZE);
+            batches.push(validAddresses.slice(i, i + BATCH_SIZE));
+        }
+
+        const fetchBatch = async (batchAddresses: string[], batchIndex: number) => {
             const url = `https://api.dexscreener.com/latest/dex/tokens/${batchAddresses.join(',')}`;
-            
             try {
                 const response = await axios.get(url, {
                     headers: {
@@ -91,15 +95,23 @@ export async function fetchDexScreenerData(
                         'Pragma': 'no-cache'
                     }
                 });
-                if (response.data?.pairs) {
-                    allPairs.push(...response.data.pairs);
-                }
-                // Add a small delay between batches to avoid rate limiting
-                await new Promise(resolve => setTimeout(resolve, 200));
+                console.log(`Batch ${batchIndex + 1} fetched successfully`);
+                return response.data?.pairs || [];
             } catch (error) {
-                console.error(`Error fetching batch ${i/BATCH_SIZE + 1}:`, error);
+                console.error(`Error fetching batch ${batchIndex + 1}:`, error);
+                return [];
             }
-        }
+        };
+
+        const batchPromises = batches.map((batch, index) => 
+            fetchBatch(batch, index).then(pairs => {
+                // Add a small delay after each batch to avoid rate limiting
+                return new Promise(resolve => setTimeout(() => resolve(pairs), 200 * index));
+            })
+        );
+
+        const results = await Promise.all(batchPromises);
+        const allPairs = results.flat() as DexScreenerPair[];
 
         return {
             pairs: allPairs
@@ -109,6 +121,8 @@ export async function fetchDexScreenerData(
         return { pairs: [] };
     }
 }
+
+// ... rest of the file ...
 
 export async function fetchTokenAnalysis(address: string) {
     try {

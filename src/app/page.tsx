@@ -1,103 +1,41 @@
+"use client"
+import Head from 'next/head';
 import { TokenGrid } from "@/components/token-grid";
-import { Connection } from "@solana/web3.js";
-import { getTokenData, fetchDexScreenerData, calculateHoldings } from "@/lib/token-utils";
-import { DexScreenerResponse } from "@/types";
-import { getCachedData, setCachedData, shouldRefreshCache } from '@/lib/cache';
+import { TokenHolding } from "@/types";
 import { formatDateTime } from '@/lib/date-utils';
-import { Metadata } from "next";
+import { useState, useEffect } from 'react';
+import { getLatestData } from './actions';
 
-const WALLET_ADDRESS = 'AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG';
+export default function Page() {
+  const [holdings, setHoldings] = useState<TokenHolding[]|null>(null);
+  const [lastUpdated, setLastUpdated] = useState<Date|null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string|null>(null);
 
-// Create connection outside of component to avoid recreation
-const connection = new Connection(
-  process.env.NEXT_PUBLIC_RPC_ENDPOINT || 'https://solana-mainnet.g.alchemy.com/v2/7CBPP2HmBAKkdbI4gbO7ruEt_wLCyGQ2',
-  'confirmed'
-);
-
-function deduplicateMarketData(data: DexScreenerResponse): DexScreenerResponse {
-  // Create a map to store the highest volume pair for each token
-  const pairMap = new Map();
-  
-  data.pairs.forEach(pair => {
-    const tokenAddress = pair.baseToken.address;
-    const currentPair = pairMap.get(tokenAddress);
-    
-    // If we don't have this token yet, or if this pair has higher volume, use this pair
-    if (!currentPair || 
-        (pair.volume?.h24 || 0) > (currentPair.volume?.h24 || 0)) {
-      pairMap.set(tokenAddress, pair);
-    }
-  });
-
-  // Convert map back to array
-  return {
-    pairs: Array.from(pairMap.values())
-  };
-}
-
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: "Elizaverse Observatory | AI16z",
-    description: "Live 'Observatory' dashboard showcasing the emergent network of autonomous AI agents",
-  };
-}
-
-export default async function Page() {
-  try {
-    let holdings;
-    let lastUpdated;
-    let isCached = false;
-
-    // Check cache first
-    const cached = await getCachedData();
-    const shouldRefresh = await shouldRefreshCache();
-    console.log('Should refresh cached?', shouldRefresh);
-    if (cached && !shouldRefresh) {
-      console.log('Using cached data');
-      holdings = cached.holdings;
-      lastUpdated = new Date(cached.lastUpdated);
-      isCached = true;
-    } else {
-      console.log('Fetching fresh data');
-      // Fetch fresh data
+  useEffect(() => {
+    async function updateData() {
+      setIsLoading(true);
+      setError(null);
       try {
-        const tokenBalances = await getTokenData(connection);
-        
-        if (!tokenBalances || tokenBalances.length === 0) {
-          return <div>No tokens found</div>;
-        }
-
-        const marketData = await fetchDexScreenerData(
-          tokenBalances.map(t => t.mint)
-        );
-
-        if (!marketData?.pairs?.length) {
-          return <div>No market data available</div>;
-        }
-
-        const dedupedMarketData = deduplicateMarketData(marketData);
-        holdings = await calculateHoldings(
-          connection,
-          tokenBalances,
-          dedupedMarketData,
-          WALLET_ADDRESS
-        );
-        lastUpdated = new Date();
-        setCachedData(holdings);
-      } catch (error) {
-        // fall back to cached data
-        console.error('Error fetching fresh data:', error);
-        if (cached) {
-          holdings = cached.holdings;
-          lastUpdated = new Date(cached.lastUpdated);
-          isCached = true;
-        } else {
-          return <div>Error loading token data</div>;
-        }
+        const { holdings, lastUpdated } = await getLatestData();
+        setHoldings(holdings);
+        setLastUpdated(lastUpdated);
+      } catch (err) {
+        setError('Failed to fetch data. Please try again later.');
+        console.error('Error updating data:', err);
+      } finally {
+        setIsLoading(false);
       }
     }
+    updateData();
+  }, []);
 
-    return (
+  return (
+    <>
+      <Head>
+        <title>Elizaverse Observatory | AI16z</title>
+        <meta name="description" content="Live 'Observatory' dashboard showcasing the emergent network of autonomous AI agents" />
+      </Head>
       <main className="container max-w-[95vw] mx-auto p-4">
         <div className="flex flex-col items-center mb-8">
 
@@ -207,9 +145,7 @@ export default async function Page() {
               </div>
             </details>
 
-
-
-       <details className="w-full max-w-2xl">
+        <details className="w-full max-w-2xl">
               <summary className="cursor-pointer text-[rgb(94,84,68)] hover:opacity-80 transition-opacity text-center">
                 Release Notes & Requests for Help
               </summary>
@@ -241,7 +177,7 @@ export default async function Page() {
                       <div className="text-sm text-gray-500">
                         Deployed to Production by{' '}
                         <a href="https://x.com/timshelxyz" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                         ◾️ Timshel
+                          ◾️ Timshel
                         </a>
                       </div>
                     </div>
@@ -257,7 +193,7 @@ export default async function Page() {
                       <div className="text-sm text-gray-500">
                         Deployed to Production by{' '}
                         <a href="https://x.com/timshelxyz" target="_blank" rel="noopener noreferrer" className="hover:opacity-80 transition-opacity">
-                         ◾️ Timshel
+                          ◾️ Timshel
                         </a>
                       </div>
                     </div>
@@ -351,8 +287,15 @@ export default async function Page() {
               </div>
             </details>
           </div>
-          
-          <TokenGrid holdings={holdings} />
+          {
+            (error) ?
+              <div>{error}</div> :
+              (isLoading) ? 
+                <div>Loading...</div> : 
+                (holdings === null) ?
+                  <div>No data found</div> :
+                  <TokenGrid holdings={holdings} />
+          }
           
           <footer className="mt-8 text-center text-[rgb(68,77,86)] text-sm">
             <p>
@@ -401,29 +344,11 @@ export default async function Page() {
               </a>
             </div>
             <div className="text-sm text-gray-500 mb-4">
-  Last updated: {formatDateTime(lastUpdated)}{isCached ? ' (cached)' : ''}
-</div>
+              Last updated: {formatDateTime(lastUpdated)} GMT
+            </div>
           </footer>
         </div>
       </main>
-    );
-
-  } catch (error) {
-    console.error('Error in Home component:', error);
-    // Try to return cached data on error
-    const cached = await getCachedData();
-    if (cached) {
-      return (
-        <main className="container max-w-[95vw] mx-auto p-4">
-          <div className="flex flex-col items-center mb-8">
-          <div className="text-sm text-gray-500 mb-4">
-  Last updated: {formatDateTime(new Date(cached.lastUpdated))} (cached)
-</div>
-            <TokenGrid holdings={cached.holdings} />
-          </div>
-        </main>
-      );
-    }
-    return <div>Error loading token data</div>;
-  }
+    </>
+  );
 }
