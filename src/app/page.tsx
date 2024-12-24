@@ -50,17 +50,7 @@ export default function Page() {
 
             <div className="flex flex-wrap gap-4 mb-4 justify-center">
               <a 
-                href="https://ai16z.ai/eliza-list" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="px-6 py-2 bg-[rgb(35,34,32)] rounded-full 
-                          text-white font-medium hover:opacity-90 transition-opacity
-                          shadow-lg hover:shadow-xl whitespace-nowrap"
-              >
-                Apply to Be Featured ✨
-              </a>
-              <a 
-                href="https://formless.ai/c/fz7JHbey05w1" 
+                href="https://mee.fun" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="px-6 py-2 border-2 border-[rgb(94,84,68)] rounded-full 
