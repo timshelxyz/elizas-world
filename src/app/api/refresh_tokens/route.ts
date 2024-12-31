@@ -2,33 +2,35 @@ import { NextResponse } from 'next/server';
 import { fetchLatestData } from '@/scripts/fetchLatestData';
 import { TokenHolding } from '@/types';
 
-const TIMEOUT_MS = 30000; // 30 seconds timeout
-
 interface FetchResult {
     holdings: TokenHolding[];
-    lastUpdated: string;
+    lastUpdated: Date;
 }
-export async function GET() {
-    try {
-        const dataPromise = fetchLatestData();
-        const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('Request timed out')), TIMEOUT_MS)
-        );
 
-        const data = await Promise.race([dataPromise, timeoutPromise])  as FetchResult;
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const sync = searchParams.get('sync') === 'true';
+    // Start the fetch process in the background
+if (sync) {
+        try {
+            const data = await fetchLatestData() as FetchResult;
+            return NextResponse.json(data, { status: 200 });
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return NextResponse.json(
+                { error: 'An error occurred while fetching data' },
+                { status: 500 }
+            );
+        }
+    } else {
+        // Asynchronous execution (original behavior)
+        fetchLatestData()
+            .then(() => console.log('Data fetched successfully'))
+            .catch(error => console.error('Error fetching data:', error));
 
         return NextResponse.json(
-            {
-                holdings: data.holdings,
-                lastUpdated: data.lastUpdated,
-            },
-            { status: 200 }
-        );
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return NextResponse.json(
-            { error: 'An error occurred while fetching data' },
-            { status: 500 }
+            { message: 'Data refresh initiated' },
+            { status: 202 }
         );
     }
 }
