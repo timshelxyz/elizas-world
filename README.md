@@ -35,3 +35,7 @@
 
 # Thou Mayest dream with us
   This is open — can't wait to see what others dream up
+
+————————
+
+If something looks weird and we want to manually refresh the data, click here: https://elizas.world/api/refresh_tokens?sync=true
