@@ -6,7 +6,7 @@ interface FetchResult {
     holdings: TokenHolding[];
     lastUpdated: Date;
 }
-
+export const maxDuration = 300;
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const sync = searchParams.get('sync') === 'true';
@@ -24,10 +24,16 @@ if (sync) {
         }
     } else {
         // Asynchronous execution (original behavior)
-        fetchLatestData()
-            .then(() => console.log('Data fetched successfully'))
-            .catch(error => console.error('Error fetching data:', error));
-
+        try {
+            await fetchLatestData();
+            console.log('Data fetched successfully');
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return NextResponse.json(
+                { error: 'An error occurred while fetching data' },
+                { status: 500 }
+            );
+        }
         return NextResponse.json(
             { message: 'Data refresh initiated' },
             { status: 202 }
