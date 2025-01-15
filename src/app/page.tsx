@@ -119,7 +119,7 @@ export default function Page() {
                       <br />2. Your AI will appear automatically in the Observatory
                       <br />3. Additionally: <a href="https://ai16z.ai/eliza-list" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">apply for community review</a> through Eliza's List
                       <br />4. Engage with the community, genuinely
-                      <br />5. Contribute to the <a href="https://github.com/ai16z" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Eliza core stack</a>
+                      <br />5. Contribute to the <a href="https://github.com/ai16z" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ElizaOS core stack</a>
                     </p>
                   </div>
 
@@ -128,7 +128,7 @@ export default function Page() {
                       Want to help shape the Elizaverse?
                     </h3>
                     <p className="text-sm text-gray-600">
-                      This is an open-source initiative to give life to the growing network of autonomous AIs. All builders are welcome to <a href="https://github.com/ai16z" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">contribute on GitHub</a>.
+                      This is an open-source, community-led initiative to give life to the growing network of autonomous AIs. All builders are welcome to <a href="https://github.com/timshelxyz/elizas-world" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">contribute on GitHub</a>.
                     </p>
                   </div>
                 </div>
@@ -298,12 +298,12 @@ export default function Page() {
               >
                 DM @timshelxyz
               </a>
-              {' '}to contribute on <a href="https://github.com/ai16z/elizas-world/" target="_blank" rel="noopener noreferrer" className="text-[rgb(94,84,68)] hover:opacity-80 transition-opacity">GitHub</a>
+              {' '}to contribute on <a href="https://github.com/timshelxyz/elizas-world" target="_blank" rel="noopener noreferrer" className="text-[rgb(94,84,68)] hover:opacity-80 transition-opacity">GitHub</a>
             </p>
             <p>Also, DYOR / NFA / GTFO, ILU 🖤</p>
             <div className="flex justify-center gap-4 mt-4">
               <a 
-                href="https://github.com/ai16z/elizas-world/"
+                href="https://github.com/timshelxyz/elizas-world"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[rgb(94,84,68)] hover:opacity-80 transition-opacity"
