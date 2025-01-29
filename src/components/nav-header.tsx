@@ -102,18 +102,18 @@ export function NavHeader() {
           </a>
           <nav className="flex items-center gap-4">
             <a 
-              href="https://ai16z.ai/" 
+              href="https://www.elizaos.ai/" 
               className="text-[rgb(94,84,68)] font-medium text-sm hover:bg-[rgb(232,227,214)] px-3 py-1.5 rounded-xl"
             >
-              ai16z
+              ElizaOS
             </a>
             <a 
-              href="https://ai16z.github.io/eliza/" 
+              href="https://github.com/elizaOS/eliza" 
               target="_blank"
               rel="noopener noreferrer"
               className="text-[rgb(94,84,68)] font-medium text-sm hover:bg-[rgb(232,227,214)] px-3 py-1.5 rounded-xl"
             >
-              Eliza
+              Eliza GitHub
             </a>
             <span className="text-[rgb(255,136,68)] font-medium text-sm px-3 py-1.5">
               Tribute
