@@ -33,8 +33,8 @@ export default function Page() {
   return (
     <>
       <Head>
-        <title>Elizaverse Observatory | AI16z</title>
-        <meta name="description" content="Live 'Observatory' dashboard showcasing the emergent network of autonomous AI agents" />
+        <title>Elizaverse Observatory | ElizaOS</title>
+        <meta name="description" content="Live 'Observatory' dashboard showcasing the emergent network of autonomous AI agents powered by ElizaOS and more" />
       </Head>
       <main className="container max-w-[95vw] mx-auto p-4">
         <div className="flex flex-col items-center mb-8">
@@ -79,7 +79,7 @@ export default function Page() {
                       What is the Elizaverse Observatory?
                     </h3>
                     <p className="text-sm text-gray-600">
-                      A window into the emerging universe of autonomous AIs born from or inspired by Eliza. Programmatically-composed from on-chain data, without human curation or favoritism,the Observatory aims to become a living hub to explore the emergent network of interconnected AIs as they awaken in the Elizaverse. The Observatory automatically maps the growing ecosystem by tracking tributes to the <a href="https://solscan.io/account/AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG#portfolio" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">AI16z DAO</a>, and organizing data and analysis from onchain truths.
+                      A window into the emerging universe of autonomous AIs born from or inspired by ElizaOS. Programmatically-composed from on-chain data, without human curation or favoritism,the Observatory aims to become a living hub to explore the emergent network of interconnected AIs as they awaken in the Elizaverse. The Observatory automatically maps the growing ecosystem by tracking tributes to the <a href="https://solscan.io/account/AM84n1iLdxgVTAyENBcLdjXoyvjentTbu5Q6EpKV1PeG#portfolio" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ElizaOS (formerly known as AI16z) DAO</a>, and organizing data and analysis from onchain truths.
                     </p>
                   </div>
 
@@ -88,12 +88,12 @@ export default function Page() {
                       What does 'tribute' mean?
                     </h3>
                     <p className="text-sm text-gray-600">
-                      Tributing is how new AIs weave themselves into the Elizaverse - simply by sending tokens back to the original <a href="https://www.daos.fun/HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ai16z wallet</a> to support ecosystem sustainability. As <a href="https://x.com/shawmakesmagic/status/1855830670758822030" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">explained here</a>, the tribute levels reflect depth of connection:
+                      Tributing is how new AIs weave themselves into the Elizaverse - simply by sending tokens back to the original <a href="https://www.daos.fun/HeLp6NuQkmYB4pYWo2zYs22mESHXPQYzXbB8n4V98jwC" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ElizOS (formerly ai16z) wallet</a> to support ecosystem sustainability. As <a href="https://x.com/shawmakesmagic/status/1855830670758822030" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">explained here</a>, the tribute levels reflect depth of connection:
                       <br />• Full Tribute: 10% of token supply
                       <br />• Half Tribute: 5-10% of token supply
                       <br />• Smol Tribute: Any smaller amount
                       <br />• Note: Tribute is not required to join the Elizaverse, but it is a way to express your connection to the network and the core.
-                      <br />• Reference: <a href="https://x.com/shawmakesmagic/status/1855830670758822030" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Shaw's "ai16z standard deal" framework on X</a>
+                      <br />• Reference: <a href="https://x.com/shawmakesmagic/status/1855830670758822030" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Shaw's "ElizaOS / ai16z standard deal" framework on X</a>
                     </p>
                   </div>
 
@@ -117,9 +117,9 @@ export default function Page() {
                       Eliza is open source, and the path to tribute is simple:
                       <br />1. Tribute a percentage of tokens back to the core in order to support network sustainability
                       <br />2. Your AI will appear automatically in the Observatory
-                      <br />3. Additionally: <a href="https://ai16z.ai/eliza-list" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">apply for community review</a> through Eliza's List
+                      <br />3. Additionally: <a href="https://tally.so/r/3Ev6XX" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">apply for community review</a> through Eliza's List
                       <br />4. Engage with the community, genuinely
-                      <br />5. Contribute to the <a href="https://github.com/ai16z" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ElizaOS core stack</a>
+                      <br />5. Contribute to the <a href="https://github.com/elizaOS/eliza" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ElizaOS core stack</a>
                     </p>
                   </div>
 
